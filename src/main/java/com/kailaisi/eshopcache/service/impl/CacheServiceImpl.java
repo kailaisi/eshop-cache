@@ -32,6 +32,29 @@ public class CacheServiceImpl implements CacheService {
         return null;
     }
 
+    @CachePut(value = CACHE_NAME, key = "'shop_info_'+#shopInfo.getId()")
+    @Override
+    public ShopInfo saveShopInfo2LocalCache(ShopInfo shopInfo) {
+        return shopInfo;
+    }
+
+    @Cacheable(value = CACHE_NAME, key = "'shop_info_'+#shopId")
+    @Override
+    public ShopInfo getShopInfo2LocalCache(Long shopId) {
+        return null;
+    }
+
+    @CachePut(value = CACHE_NAME, key = "'product_info_'+#productInfo.getId()")
+    @Override
+    public ProductInfo saveProductInfo2LocalCache(ProductInfo productInfo) {
+        return productInfo;
+    }
+    @Cacheable(value = CACHE_NAME, key = "'product_info_'+#productId")
+    @Override
+    public ProductInfo getProductInfo2LocalCache(Long productId) {
+        return null;
+    }
+
     @Override
     public void saveShopInfo2RedisCache(ShopInfo shopInfo) {
         String key = "shop_info_" + shopInfo.getId();
@@ -44,15 +67,5 @@ public class CacheServiceImpl implements CacheService {
         jedisCluster.set(key, JSONObject.toJSONString(productInfo));
     }
 
-    @CachePut(value = CACHE_NAME, key = "'shop_info_'+#shopInfo.getId()")
-    @Override
-    public ShopInfo saveShopInfo2LocalCache(ShopInfo shopInfo) {
-        return shopInfo;
-    }
 
-    @CachePut(value = CACHE_NAME, key = "'product_info_'+#productInfo.getId()")
-    @Override
-    public ProductInfo saveProductInfo2LocalCache(ProductInfo productInfo) {
-        return productInfo;
-    }
 }

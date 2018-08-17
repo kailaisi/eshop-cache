@@ -43,12 +43,22 @@ public interface CacheService {
      * @param shopInfo
      */
     ShopInfo saveShopInfo2LocalCache(ShopInfo shopInfo);
-
+    /**
+     * echeache中获取店铺信息
+     *
+     * @param shopId
+     */
+    ShopInfo getShopInfo2LocalCache(Long shopId);
     /**
      * 保存商品信息到echache中
      *
      * @param productInfo
      */
     ProductInfo saveProductInfo2LocalCache(ProductInfo productInfo);
-
+    /**
+     * 保存商品信息到echache中
+     *
+     * @param productId
+     */
+    ProductInfo getProductInfo2LocalCache(Long productId);
 }

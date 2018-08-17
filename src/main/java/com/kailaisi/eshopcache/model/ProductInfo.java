@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * 商品信息
  */
-public class ProductInfo {
+public class  ProductInfo {
 
     private Long id;
     private String name;
@@ -18,6 +18,9 @@ public class ProductInfo {
      */
     private List<String> pictureList;
     private List<String> color;
+
+    public ProductInfo() {
+    }
 
     public ProductInfo(Long id, String name, Double price) {
         this.id = id;
@@ -64,4 +67,5 @@ public class ProductInfo {
     public void setColor(List<String> color) {
         this.color = color;
     }
+
 }
