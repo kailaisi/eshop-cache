@@ -1,9 +1,7 @@
 package com.kailaisi.eshopcache.kafka;
 
-import com.alibaba.fastjson.JSONObject;
 import kafka.consumer.Consumer;
 import kafka.consumer.ConsumerConfig;
-import kafka.consumer.ConsumerIterator;
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
 
@@ -29,7 +27,7 @@ public class KafkaConsumer implements Runnable {
 
     private static ConsumerConfig createConsumerConfig() {
         Properties props = new Properties();
-        props.put("zookeeper.connect", "192.168.1.107:2181,192.168.1.108:2181,192.168.1.109:2181");
+        props.put("zookeeper.connect", "192.168.11.130:2181,192.168.11.131:2181,192.168.11.128:2181,192.168.11.15:2181");
         props.put("group.id", "test-consumer-group");
         props.put("zookeeper.session.timeout.ms", "40000");
         props.put("zookeeper.sync.time.ms", "2000");

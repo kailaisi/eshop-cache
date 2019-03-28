@@ -64,11 +64,12 @@ public class KafkaMessageProcessor implements Runnable {
      * @param object
      */
     private void processShopInfoChangeMessage(JSONObject object) throws Exception {
-        Long id = object.getLong("productId");
+        Long id = object.getLong("shopId");
         //调用服务的接口，getProductInfo,在服务中查询数据库，然后返回
         String shopJson = "{\"id\":1,\"name\":\"王雷手机店\",\"level\":5,\"rate\":0.99}";
         ShopInfo shopInfo = JSONObject.parseObject(shopJson, ShopInfo.class);
         cacheService.saveShopInfo2LocalCache(shopInfo);
+        System.out.println("===================获取到刚保存到本地缓存的信息:" + shopInfo.toString() + "==================");
         cacheService.saveShopInfo2RedisCache(shopInfo);
     }
 }

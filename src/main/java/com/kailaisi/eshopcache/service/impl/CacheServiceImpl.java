@@ -40,7 +40,7 @@ public class CacheServiceImpl implements CacheService {
 
     @Cacheable(value = CACHE_NAME, key = "'shop_info_'+#shopId")
     @Override
-    public ShopInfo getShopInfo2LocalCache(Long shopId) {
+    public ShopInfo getShopInfoFromLocalCache(Long shopId) {
         return null;
     }
 
@@ -51,7 +51,7 @@ public class CacheServiceImpl implements CacheService {
     }
     @Cacheable(value = CACHE_NAME, key = "'product_info_'+#productId")
     @Override
-    public ProductInfo getProductInfo2LocalCache(Long productId) {
+    public ProductInfo getProductInfoFromLocalCache(Long productId) {
         return null;
     }
 
@@ -66,6 +66,22 @@ public class CacheServiceImpl implements CacheService {
         String key = "product_info_" + productInfo.getId();
         jedisCluster.set(key, JSONObject.toJSONString(productInfo));
     }
+    /**
+     * 从redis中获取商品信息
+     */
+    public ProductInfo getProductInfoFromReidsCache(Long productId) {
+        String key = "product_info_" + productId;
+        String json = jedisCluster.get(key);
+        return JSONObject.parseObject(json, ProductInfo.class);
+    }
 
+    /**
+     * 从redis中获取店铺信息
+     */
+    public ShopInfo getShopInfoFromReidsCache(Long shopId) {
+        String key = "shop_info_" + shopId;
+        String json = jedisCluster.get(key);
+        return JSONObject.parseObject(json, ShopInfo.class);
+    }
 
 }

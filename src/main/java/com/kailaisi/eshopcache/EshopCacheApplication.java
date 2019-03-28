@@ -37,19 +37,21 @@ public class EshopCacheApplication {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource());
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-   //     sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:/mybatis/*.xml"));
+        //     sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:/mybatis/*.xml"));
         return sqlSessionFactoryBean.getObject();
     }
 
     @Bean
     public JedisCluster JedisClusterFactory() {
         Set<HostAndPort> jedisClusterNodes = new HashSet<HostAndPort>();
-        jedisClusterNodes.add(new HostAndPort("192.168.1.107", 7001));
-        jedisClusterNodes.add(new HostAndPort("192.168.1.108", 7003));
-        jedisClusterNodes.add(new HostAndPort("192.168.1.108", 7004));
+        jedisClusterNodes.add(new HostAndPort("192.168.11.130", 7001));
+        jedisClusterNodes.add(new HostAndPort("192.168.11.15", 7007));
+        jedisClusterNodes.add(new HostAndPort("192.168.11.128", 7005));
+        jedisClusterNodes.add(new HostAndPort("192.168.11.131", 7003));
         JedisCluster jedisCluster = new JedisCluster(jedisClusterNodes);
         return jedisCluster;
     }
+
     @Bean
     public ServletListenerRegistrationBean servletListenerRegistrationBean() {
         ServletListenerRegistrationBean servletListenerRegistrationBean =
@@ -57,6 +59,7 @@ public class EshopCacheApplication {
         servletListenerRegistrationBean.setListener(new InitListener());
         return servletListenerRegistrationBean;
     }
+
     @Bean
     public PlatformTransactionManager transactionManager() {
         return new DataSourceTransactionManager(dataSource());
