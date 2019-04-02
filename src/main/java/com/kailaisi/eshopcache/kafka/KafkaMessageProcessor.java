@@ -1,7 +1,7 @@
 package com.kailaisi.eshopcache.kafka;
 
 import com.alibaba.fastjson.JSONObject;
-import com.kailaisi.eshopcache.SpringContext;
+import com.kailaisi.eshopcache.spring.SpringContext;
 import com.kailaisi.eshopcache.model.ProductInfo;
 import com.kailaisi.eshopcache.model.ShopInfo;
 import com.kailaisi.eshopcache.service.CacheService;

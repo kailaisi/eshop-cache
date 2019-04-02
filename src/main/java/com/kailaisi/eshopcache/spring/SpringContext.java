@@ -1,4 +1,4 @@
-package com.kailaisi.eshopcache;
+package com.kailaisi.eshopcache.spring;
 
 import org.springframework.context.ApplicationContext;
 /**

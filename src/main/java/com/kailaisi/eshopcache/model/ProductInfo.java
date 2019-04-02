@@ -1,71 +1,109 @@
 package com.kailaisi.eshopcache.model;
 
-import java.util.List;
-
 /**
  * 商品信息
+ * @author Administrator
+ *
  */
-public class  ProductInfo {
+public class ProductInfo {
 
-    private Long id;
-    private String name;
-    private Double price;
-    /**
-     * id : 1000
-     * price : 5999
-     * pictureList : ["a.png","b.png","c.png"]
-     * color : ["红色","白色","绿色 "]
-     */
-    private List<String> pictureList;
-    private List<String> color;
+	private Long id;
+	private String name;
+	private Double price;
+	private String pictureList;
+	private String specification;
+	private String service;
+	private String color;
+	private String size;
+	private Long shopId;
+	private String modifiedTime;
+	
+	public ProductInfo() {
+		
+	}
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Double getPrice() {
+		return price;
+	}
+	public void setPrice(Double price) {
+		this.price = price;
+	}
 
-    public ProductInfo() {
-    }
+	public String getPictureList() {
+		return pictureList;
+	}
 
-    public ProductInfo(Long id, String name, Double price) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-    }
+	public void setPictureList(String pictureList) {
+		this.pictureList = pictureList;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public String getSpecification() {
+		return specification;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setSpecification(String specification) {
+		this.specification = specification;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getService() {
+		return service;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setService(String service) {
+		this.service = service;
+	}
 
-    public Double getPrice() {
-        return price;
-    }
+	public String getColor() {
+		return color;
+	}
 
-    public void setPrice(Double price) {
-        this.price = price;
-    }
+	public void setColor(String color) {
+		this.color = color;
+	}
 
-    public List<String> getPictureList() {
-        return pictureList;
-    }
+	public String getSize() {
+		return size;
+	}
 
-    public void setPictureList(List<String> pictureList) {
-        this.pictureList = pictureList;
-    }
+	public void setSize(String size) {
+		this.size = size;
+	}
 
-    public List<String> getColor() {
-        return color;
-    }
+	public Long getShopId() {
+		return shopId;
+	}
 
-    public void setColor(List<String> color) {
-        this.color = color;
-    }
+	public void setShopId(Long shopId) {
+		this.shopId = shopId;
+	}
+
+	public String getModifiedTime() {
+		return modifiedTime;
+	}
+
+	public void setModifiedTime(String modifiedTime) {
+		this.modifiedTime = modifiedTime;
+	}
+
+	@Override
+	public String toString() {
+		return "ProductInfo [id=" + id + ", name=" + name + ", price=" + price
+				+ ", pictureList=" + pictureList + ", specification="
+				+ specification + ", service=" + service + ", color=" + color
+				+ ", size=" + size + ", shopId=" + shopId + ", modifiedTime="
+				+ modifiedTime + "]";
+	}
 
 }
