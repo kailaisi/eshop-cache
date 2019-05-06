@@ -5,6 +5,7 @@ import com.kailaisi.eshopcache.model.ProductInfo;
 import com.kailaisi.eshopcache.spring.SpringContext;
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
+import com.netflix.hystrix.HystrixCommandProperties;
 import redis.clients.jedis.JedisCluster;
 
 /**
@@ -16,7 +17,12 @@ public class SaveProductInfo2RedisCacheCommand extends HystrixCommand<Boolean> {
     private ProductInfo productInfo;
 
     public SaveProductInfo2RedisCacheCommand(ProductInfo productInfo) {
-        super(HystrixCommandGroupKey.Factory.asKey("ProductInfoGroup"));
+        super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("ProductInfoGroup"))
+                .andCommandPropertiesDefaults(HystrixCommandProperties.Setter()
+                        .withExecutionTimeoutInMilliseconds(100)
+                        .withCircuitBreakerRequestVolumeThreshold(1000)
+                        .withCircuitBreakerErrorThresholdPercentage(70)
+                        .withMetricsRollingPercentileWindowInMilliseconds(60 * 1000)));
         this.productInfo = productInfo;
     }
 
@@ -26,5 +32,10 @@ public class SaveProductInfo2RedisCacheCommand extends HystrixCommand<Boolean> {
         String key = "product_info_" + productInfo.getId();
         jedisCluster.set(key, JSONObject.toJSONString(productInfo));
         return true;
+    }
+
+    @Override
+    protected Boolean getFallback() {
+        return false;
     }
 }

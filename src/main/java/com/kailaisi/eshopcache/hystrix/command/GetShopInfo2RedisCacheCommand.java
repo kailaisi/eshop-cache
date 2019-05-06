@@ -5,6 +5,7 @@ import com.kailaisi.eshopcache.model.ShopInfo;
 import com.kailaisi.eshopcache.spring.SpringContext;
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
+import com.netflix.hystrix.HystrixCommandProperties;
 import redis.clients.jedis.JedisCluster;
 
 /**
@@ -16,7 +17,12 @@ public class GetShopInfo2RedisCacheCommand extends HystrixCommand<ShopInfo> {
     private Long shopId;
 
     public GetShopInfo2RedisCacheCommand(Long shopId) {
-        super(HystrixCommandGroupKey.Factory.asKey("ProductInfoGroup"));
+        super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("ProductInfoGroup"))
+                .andCommandPropertiesDefaults(HystrixCommandProperties.Setter()
+                        .withExecutionTimeoutInMilliseconds(100)
+                        .withCircuitBreakerRequestVolumeThreshold(1000)
+                        .withCircuitBreakerErrorThresholdPercentage(70)
+                        .withMetricsRollingPercentileWindowInMilliseconds(60 * 1000)));
         this.shopId = shopId;
     }
 
@@ -26,5 +32,10 @@ public class GetShopInfo2RedisCacheCommand extends HystrixCommand<ShopInfo> {
         String key = "shop_info_" + shopId;
         String json = jedisCluster.get(key);
         return JSONObject.parseObject(json, ShopInfo.class);
+    }
+
+    @Override
+    protected ShopInfo getFallback() {
+        return null;
     }
 }

@@ -5,6 +5,7 @@ import com.kailaisi.eshopcache.model.ProductInfo;
 import com.kailaisi.eshopcache.spring.SpringContext;
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
+import com.netflix.hystrix.HystrixCommandProperties;
 import redis.clients.jedis.JedisCluster;
 
 /**
@@ -16,7 +17,12 @@ public class GetProductInfo2RedisCacheCommand extends HystrixCommand<ProductInfo
     private Long productId;
 
     public GetProductInfo2RedisCacheCommand(Long productId) {
-        super(HystrixCommandGroupKey.Factory.asKey("ProductInfoGroup"));
+        super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("ProductInfoGroup"))
+                .andCommandPropertiesDefaults(HystrixCommandProperties.Setter()
+                        .withExecutionTimeoutInMilliseconds(100)
+                        .withCircuitBreakerRequestVolumeThreshold(1000)
+                        .withCircuitBreakerErrorThresholdPercentage(70)
+                        .withMetricsRollingPercentileWindowInMilliseconds(60 * 1000)));
         this.productId = productId;
     }
 
@@ -26,5 +32,10 @@ public class GetProductInfo2RedisCacheCommand extends HystrixCommand<ProductInfo
         String key = "product_info_" + productId;
         String json = jedisCluster.get(key);
         return JSONObject.parseObject(json, ProductInfo.class);
+    }
+
+    @Override
+    protected ProductInfo getFallback() {
+        return null;
     }
 }
